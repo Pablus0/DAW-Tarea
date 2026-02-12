@@ -19,8 +19,8 @@ echo "==================================="
 # ACTUALIZAR CÓDIGO
 # ===========================
 echo "🔄 Actualizando código desde Git..."
-cd "$REPO_DIR" || { echo "❌ No se encontró el repositorio"; exit 1; }
-git pull origin main || { echo "❌ Error al hacer git pull"; exit 1; }
+cd "$REPO_DIR" || { echo " No se encontró el repositorio"; exit 1; }
+git pull origin main || { echo " Error al hacer git pull"; exit 1; }
 
 # ===========================
 # LIMPIAR COMPILACIÓN ANTERIOR
@@ -32,13 +32,13 @@ mkdir -p "$BUILD_DIR/WEB-INF/classes"
 # ===========================
 # COMPILAR SERVLET
 # ===========================
-echo "🛠️ Compilando aplicación..."
+echo " Compilando aplicación..."
 javac -cp "$TOMCAT_DIR/lib/servlet-api.jar" \
       -d "$BUILD_DIR/WEB-INF/classes" \
       "$SRC_DIR/$SERVLET_PACKAGE"/*.java
 
 if [ $? -ne 0 ]; then
-    echo "❌ Error en compilación"
+    echo " Error en compilación"
     exit 1
 fi
 
@@ -50,20 +50,20 @@ cd "$BUILD_DIR" || exit 1
 jar -cvf "$WAR_NAME" . > /dev/null
 
 if [ $? -ne 0 ]; then
-    echo "❌ Error generando WAR"
+    echo " Error generando WAR"
     exit 1
 fi
 
 # ===========================
 # DESPLEGAR EN TOMCAT
 # ===========================
-echo "🚀 Desplegando en Tomcat..."
+echo " Desplegando en Tomcat..."
 sudo rm -rf "$TOMCAT_DIR/webapps/hola"
 sudo rm -f "$TOMCAT_DIR/webapps/$WAR_NAME"
 sudo cp "$WAR_NAME" "$TOMCAT_DIR/webapps/"
 
 if [ $? -ne 0 ]; then
-    echo "❌ Error copiando WAR"
+    echo " Error copiando WAR"
     exit 1
 fi
 
@@ -74,7 +74,7 @@ echo "🔁 Reiniciando servicio..."
 sudo systemctl restart $SERVICE_NAME
 
 if [ $? -ne 0 ]; then
-    echo "❌ Error reiniciando Tomcat"
+    echo " Error reiniciando Tomcat"
     exit 1
 fi
 
@@ -88,7 +88,7 @@ echo "🔍 Verificando despliegue..."
 curl -I http://localhost:8080/hola/hola
 
 if [ $? -ne 0 ]; then
-    echo "❌ La aplicación no responde"
+    echo " La aplicación no responde"
     exit 1
 fi
 
