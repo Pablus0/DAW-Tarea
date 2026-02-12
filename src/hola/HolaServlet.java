@@ -5,7 +5,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.annotation.WebServlet;  // ← ¡importar la anotación!
 
+@WebServlet("/hola")  // ← define la URL
 public class HolaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -14,3 +16,4 @@ public class HolaServlet extends HttpServlet {
         response.getWriter().println("<h1>¡Hola Mundo desde el Servlet!</h1>");
     }
 }
+
